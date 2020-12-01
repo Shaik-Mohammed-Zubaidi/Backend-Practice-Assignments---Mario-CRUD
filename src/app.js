@@ -48,4 +48,14 @@ app.post('/mario',(req,res)=>{
     mario.save().then((ans) => res.status(201).json(ans));
 })
 
+app.patch('/mario/:id',(req,res)=>{
+    const id= req.params.id;
+    const {name,weight}= req.body;
+    marioModel.findByIdAndUpdate(id,{name: name, weight: weight}).then(result=>{
+        res.json(result);
+    }).catch(error=>{
+        res.json({message:error.message});
+    })
+})
+
 module.exports = app;
