@@ -24,7 +24,7 @@ app.get('/mario/:id',(req,res)=>{
     marioModel.findById(id).then(result=>{
         res.json(result);
     }).catch(err=>{
-        res.json({message:err.message});
+        res.status(400).json({message:err.message});
     })
 })
 
