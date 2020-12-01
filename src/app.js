@@ -19,4 +19,13 @@ app.get('/mario',(req,res)=>{
     }).catch(err=> console.log(err));
 })
 
+app.get('/mario/:id',(req,res)=>{
+    const id= req.params.id;
+    marioModel.findById(id).then(result=>{
+        res.json(result);
+    }).catch(err=>{
+        res.json({message:err.message});
+    })
+})
+
 module.exports = app;
