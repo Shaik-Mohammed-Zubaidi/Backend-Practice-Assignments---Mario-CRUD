@@ -8,7 +8,5 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="Weekend-Hackathon-5---Student-CRUD-API" />
-    <orderEntry type="module" module-name="Weekend-Hackathon-7---Covid-Statistics" />
   </component>
 </module>

@@ -32,4 +32,18 @@ app.get('/mario/:id',(req,res)=>{
     })
 })
 
+app.post('/mario',(req,res)=>{
+    let {name,weight} = req.body;
+    if (!name || !weight) {
+        res.statusCode = 400;
+        res.json({ message: 'either name or weight is missing' });
+        return;
+    }
+    const mario = new marioModel({
+        name: name,
+        weight: weight
+    })
+    mario.save().then((ans) => res.status(201).json(ans));
+})
+
 module.exports = app;
