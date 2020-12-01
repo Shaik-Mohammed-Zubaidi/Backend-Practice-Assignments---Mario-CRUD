@@ -13,6 +13,10 @@ app.use(bodyParser.json())
 
 // your code goes here
 
-
+app.get('/mario',(req,res)=>{
+    marioModel.find().then((result)=>{
+        res.json(result);
+    }).catch(err=> console.log(err));
+})
 
 module.exports = app;
