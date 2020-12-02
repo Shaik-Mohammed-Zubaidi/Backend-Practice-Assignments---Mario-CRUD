@@ -52,10 +52,36 @@ app.post('/mario',(req,res)=>{
 app.patch('/mario/:id',(req,res)=>{
     const id= req.params.id;
     const {name,weight}= req.body;
-    marioModel.findByIdAndUpdate(id,{name: name, weight: weight}).then(result=>{
+    let newObj;
+    // console.log("before any if");
+    if(name && weight){
+        newObj= {name: name, weight: weight};
+    }
+    else if(!name && weight){
+        newObj= {weight: weight};
+    }
+    else if(!weight && name){
+        newObj= {name: name};
+    }
+    else{
+        // console.log("last else");
+        marioModel.findById(id).then(result=> res.json(result)).catch(error=>res.json({message:error.message}));
+        return;
+    }
+    // console.log("after all if else");
+    marioModel.findByIdAndUpdate(id,newObj,{new: true}).then(result=>{
         res.json(result);
     }).catch(error=>{
         res.json({message:error.message});
+    })
+})
+
+app.delete('/mario/:id',(req,res)=>{
+    const id= req.params.id;
+    marioModel.findByIdAndDelete(id).then(_=>{
+        res.status(200).json({message: "character deleted"});
+    }).catch(error=>{
+        res.status(400).json({message: error.message});
     })
 })
 
