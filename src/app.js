@@ -53,7 +53,6 @@ app.patch('/mario/:id',(req,res)=>{
     const id= req.params.id;
     const {name,weight}= req.body;
     let newObj;
-    // console.log("before any if");
     if(name && weight){
         newObj= {name: name, weight: weight};
     }
@@ -64,25 +63,22 @@ app.patch('/mario/:id',(req,res)=>{
         newObj= {name: name};
     }
     else{
-        // console.log("last else");
-        marioModel.findById(id).then(result=> {
-            if(!result){
-                res.status(400).json({message: "error"});
+        marioModel.findById(id,(error,result)=> {
+            if(error){
+                res.status(400).json({message: error.message});
                 return;
             }
             res.json(result);
-        }).catch(error=>res.json({message:error.message}));
+        })
         return;
     }
     // console.log("after all if else");
-    marioModel.findByIdAndUpdate(id,newObj,{new: true}).then(result=>{
-        if(!result){
-            res.status(400).json({message: "error"});
+    marioModel.findByIdAndUpdate(id,newObj,{new: true},(error,result)=>{
+        if(error){
+            res.status(400).json({message: error.message});
             return;
         }
         res.json(result);
-    }).catch(error=>{
-        res.json({message:error.message});
     })
 })
 
