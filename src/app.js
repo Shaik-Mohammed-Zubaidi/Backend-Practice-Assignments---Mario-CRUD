@@ -65,11 +65,21 @@ app.patch('/mario/:id',(req,res)=>{
     }
     else{
         // console.log("last else");
-        marioModel.findById(id).then(result=> res.json(result)).catch(error=>res.json({message:error.message}));
+        marioModel.findById(id).then(result=> {
+            if(!result){
+                res.status(400).json({message: "error"});
+                return;
+            }
+            res.json(result);
+        }).catch(error=>res.json({message:error.message}));
         return;
     }
     // console.log("after all if else");
     marioModel.findByIdAndUpdate(id,newObj,{new: true}).then(result=>{
+        if(!result){
+            res.status(400).json({message: "error"});
+            return;
+        }
         res.json(result);
     }).catch(error=>{
         res.json({message:error.message});
