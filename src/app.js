@@ -21,11 +21,13 @@ app.get('/mario',(req,res)=>{
 
 app.get('/mario/:id',(req,res)=>{
     const id= req.params.id;
-    marioModel.findById(id).then(result=>{
+    marioModel.findById(id,function(result,error){
+        if(error){
+            res.statusCode= 404;
+            res.json({message: error.message});
+            return;
+        }
         res.json(result);
-    }).catch(error=>{
-        res.statusCode= 404;
-        res.json({message: error.message});
     })
 })
 
